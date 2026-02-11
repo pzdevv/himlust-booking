@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: "Himalayan Lust - Experiential Treks",
   description: "Uncover breathtaking landscapes and hidden trails.",
   icons: {
-    icon: "/himalayan.png",
+    icon: "/favicon.png",
   },
 };
 
