@@ -257,6 +257,7 @@ export default function EditTripForm({ tripId, token }: EditTripFormProps) {
             }
 
             // 2. Upload PDF
+            let uploadedPdfPath: string | undefined;
             if (pdfFile) {
                 const fileExt = pdfFile.name.split(".").pop();
                 const fileName = `${tripId}/itinerary_${Date.now()}.${fileExt}`;
@@ -268,10 +269,7 @@ export default function EditTripForm({ tripId, token }: EditTripFormProps) {
                     const { data: { publicUrl } } = supabaseAuth.storage
                         .from("trip-images")
                         .getPublicUrl(fileName);
-                    // We update the trip record with the PDF path within the server action or here?
-                    // Let's do it here via client update for simplicity, OR pass it to server action.
-                    // Passing to server action is safer for consistency.
-                    formData.pdf_path = publicUrl;
+                    uploadedPdfPath = publicUrl;
                 }
             }
 
@@ -279,6 +277,7 @@ export default function EditTripForm({ tripId, token }: EditTripFormProps) {
             const payload = {
                 id: tripId,
                 ...formData,
+                pdf_path: uploadedPdfPath ?? existingPdf,
                 itinerary,
                 included,
                 excluded,

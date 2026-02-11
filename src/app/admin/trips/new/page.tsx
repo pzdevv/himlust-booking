@@ -182,7 +182,7 @@ export default function CreateTripPage() {
             const validIncluded = included.filter(i => i.trim() !== "");
             const validExcluded = excluded.filter(e => e.trim() !== "");
 
-            const metaInserts = [];
+            const metaInserts: { trip_id: string; key: string; value: string }[] = [];
             validIncluded.forEach(val => metaInserts.push({ trip_id: tripId, key: "included", value: val }));
             validExcluded.forEach(val => metaInserts.push({ trip_id: tripId, key: "excluded", value: val }));
             // Add highlights as simple strings if needed, currently reusing 'included' pattern logic if we had highlights field
