@@ -1,7 +1,7 @@
 "use server";
 
 import { createServerClient } from "@/lib/supabase-server";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export async function deleteTrip(tripId: string) {
     const supabase = await createServerClient();
@@ -102,7 +102,8 @@ export async function updateTrip(formData: any) {
 
         revalidatePath("/admin/trips");
         revalidatePath(`/trips/${formData.slug}`);
-        revalidateTag("trips");
+        revalidatePath("/trips");
+        revalidatePath("/");
         return { success: true };
     } catch (e: any) {
         return { error: e.message };
