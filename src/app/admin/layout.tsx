@@ -1,13 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { signOut } from "@/lib/auth-actions";
+import { createServerClient } from "@/lib/supabase-server";
 import { Mountain, Plus, LayoutDashboard, List, LogOut, ArrowLeft } from "lucide-react";
 
-export default function AdminLayout({
+export default async function AdminLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    // Server-side auth guard — redirect to /login if not authenticated
+    const supabase = await createServerClient();
+    const { data: { user }, error } = await supabase.auth.getUser();
+
+    if (error || !user) {
+        redirect("/login");
+    }
+
     return (
         <div className="min-h-screen bg-[#f4f5f9] flex text-[#0e0f1b]">
             {/* Sidebar */}
