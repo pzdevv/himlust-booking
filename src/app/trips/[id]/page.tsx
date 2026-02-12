@@ -63,54 +63,48 @@ export default async function TripPage({ params }: PageProps) {
         <article className="relative bg-white min-h-screen">
             {/* 1. HERO SECTION (Premium Full Width) */}
             <FadeIn className="relative h-[70vh] w-full rounded-b-[3rem] md:rounded-3xl overflow-hidden shadow-2xl mb-12 group mx-auto max-w-[98%] mt-2 md:mt-4">
-                {/* Background Image */}
-                <Image
-                    src={trip.images[0] || "/placeholder-trip.jpg"}
-                    alt={trip.title}
-                    fill
-                    className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                    priority
-                />
+                {/* Carousel Background */}
+                <TripCarousel
+                    images={trip.images.length > 0 ? trip.images : ["/placeholder-trip.jpg"]}
+                    className="h-full w-full"
+                >
+                    {/* Content Overlay */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-12 text-white z-20">
+                        <div className="max-w-7xl mx-auto w-full items-end flex justify-between flex-wrap gap-6">
+                            <div className="space-y-4 max-w-3xl">
+                                <FadeInUp delay={0.2} className="flex flex-wrap items-center gap-3">
+                                    <span
+                                        className={`text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full border shadow-sm ${difficultyColors[trip.difficulty] || "bg-gray-500 text-white"
+                                            }`}
+                                    >
+                                        {trip.difficulty}
+                                    </span>
+                                    <div className="flex items-center gap-1.5 text-white/90 text-sm font-medium bg-black/30 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+                                        <MapPin className="w-4 h-4" />
+                                        <span>{trip.location}</span>
+                                    </div>
+                                </FadeInUp>
+                                <FadeInUp delay={0.3}>
+                                    <h1 className="text-4xl md:text-7xl font-black tracking-tight leading-none drop-shadow-xl text-white">
+                                        {trip.title}
+                                    </h1>
+                                </FadeInUp>
+                                <FadeInUp delay={0.4}>
+                                    <p className="text-lg md:text-xl text-white/90 font-light max-w-xl drop-shadow-md">
+                                        {trip.days} Days • {trip.bestSeason} • Max Alt {trip.maxAltitude}
+                                    </p>
+                                </FadeInUp>
+                            </div>
 
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                {/* Content Overlay */}
-                <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 text-white">
-                    <div className="max-w-7xl mx-auto items-end flex justify-between flex-wrap gap-6">
-                        <div className="space-y-4 max-w-3xl">
-                            <FadeInUp delay={0.2} className="flex flex-wrap items-center gap-3">
-                                <span
-                                    className={`text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full border shadow-sm ${difficultyColors[trip.difficulty] || "bg-gray-500 text-white"
-                                        }`}
-                                >
-                                    {trip.difficulty}
-                                </span>
-                                <div className="flex items-center gap-1.5 text-white/90 text-sm font-medium bg-black/30 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
-                                    <MapPin className="w-4 h-4" />
-                                    <span>{trip.location}</span>
-                                </div>
-                            </FadeInUp>
-                            <FadeInUp delay={0.3}>
-                                <h1 className="text-4xl md:text-7xl font-black tracking-tight leading-none drop-shadow-xl text-white">
-                                    {trip.title}
-                                </h1>
-                            </FadeInUp>
-                            <FadeInUp delay={0.4}>
-                                <p className="text-lg md:text-xl text-white/90 font-light max-w-xl drop-shadow-md">
-                                    {trip.days} Days • {trip.bestSeason} • Max Alt {trip.maxAltitude}
-                                </p>
+                            {/* Action buttons */}
+                            <FadeInUp delay={0.5} className="hidden md:flex gap-3">
+                                <button className="p-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white hover:text-primary transition-all">
+                                    <Share2 className="w-6 h-6" />
+                                </button>
                             </FadeInUp>
                         </div>
-
-                        {/* Action buttons */}
-                        <FadeInUp delay={0.5} className="hidden md:flex gap-3">
-                            <button className="p-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white hover:text-primary transition-all">
-                                <Share2 className="w-6 h-6" />
-                            </button>
-                        </FadeInUp>
                     </div>
-                </div>
+                </TripCarousel>
             </FadeIn>
 
             {/* Main Layout Grid */}
